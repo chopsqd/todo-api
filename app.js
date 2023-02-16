@@ -2,17 +2,18 @@ const express = require('express')
 const app = express()
 const tasks = require('./routes/tasks')
 const mongoose = require("mongoose");
+const notFound = require('./middleware/not-found')
+const errorHandlerMiddleware = require('./middleware/error-handler')
 require('dotenv').config()
 
 const PORT =  process.env.PORT || 5000
 
+app.use(express.static('./public'))
 app.use(express.json())
+// app.use(notFound)
+// app.use(errorHandlerMiddleware)
 
 app.use('/api/v1/tasks', tasks)
-
-app.get('/', (req, res) => {
-    res.send('Main page')
-})
 
 const start = async () => {
     try {
